@@ -1,0 +1,51 @@
+
+; You may customize this and other start-up templates; 
+; The location of this template is c:\emu8086\inc\0_com_template.txt
+
+org 100h
+
+			mov bx , 400h
+			mov si , 1
+startLoop1: cmp si , 10
+			ja endLoop1
+			
+			mov di , 1h 
+			               
+			mov [bx] , 0Dh ; for Carriage return
+			inc bx
+			mov [bx] , 0Ah ; 0Ah for line feed
+			inc bx   
+			
+startLoop2: cmp di , 10
+			ja endLoop2
+			mov ax , si
+			mul di
+			aam     ; convert al to BCD
+			
+			add ah , 30h
+			cmp ah , 30h
+			jna singleNum
+			mov [bx] ,ah
+			inc bx   
+			
+singleNum:  add al , 30h
+			mov [bx] ,al
+			inc bx
+			
+			mov [bx] , " " ;space 
+			inc bx
+			inc di
+			jmp startLoop2
+endLoop2:   inc si
+         	jmp startLoop1
+endLoop1:	
+			
+			
+			
+			
+
+ret
+
+
+
+

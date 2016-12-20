@@ -1,0 +1,122 @@
+﻿
+; You may customize this and other start-up templates; 
+; The location of this template is c:\emu8086\inc\0_com_template.txt
+.MODEL SMALL
+;msg DB 13,10,"Press any key to continue.",13,10,"$"
+
+            mov ah ,2
+            mov dl , 0dah
+            int 21h
+            mov cx , 49d 
+	line:   mov dl , 0c4h
+	        int 21h
+	        loop line
+	        mov dl , 0bfh
+            int 21h
+	        
+			mov bx , 0h;save data from this
+			mov si , 1 ;index of first loop
+startLoop1: cmp si , 10d
+			ja endLoop1
+			mov ah , 2
+			
+			mov di , 1d;index of second loop            
+			
+			
+			mov dl , 0dh
+			int 21h
+			mov dl , 0ah
+			int 21h
+			mov dl , "|"    
+			int 21h   
+			
+startLoop2: cmp di , 10d
+			ja endLoop2
+			cmp di , 1d
+			mov dl , " "
+			int 21h
+			
+			mov ax , si
+			mul di
+			aam     ; convert al to BCD
+			
+			add ah , 30h 
+			add al , 30h
+			mov dx , ax 
+			mov ah , 2
+			
+			cmp dh , 30h
+			ja singleNum
+			
+			mov dh , dl
+			mov [bx] ," "
+			mov dl , " "
+			int 21h
+			inc bx 
+			mov dl , dh
+			mov [bx] ,dl
+			int 21h    
+			inc bx
+	        jmp singleNum2
+			
+    singleNum:
+            mov cl , dl
+            mov dl , dh  
+            mov [bx] ,dl
+            int 21h 
+			inc bx
+			mov dl , cl
+			mov [bx] , dl
+			int 21h 
+			inc bx 
+			
+			
+    singleNum2:
+            mov dl , " "
+			int 21h
+            mov dl , "|"
+			int 21h
+			
+			
+			inc di
+			jmp startLoop2
+			
+endLoop2:   inc si
+            
+	        mov dl , 0dh
+			int 21h
+			mov dl , 0ah
+			int 21h
+			mov dl , "|"
+			int 21h
+			mov cx , 49d
+   line3:   mov dl , 0c4h
+	        int 21h
+	        loop line3 
+	        mov dl , "|"
+	        int 21h
+	        
+         	jmp startLoop1
+endLoop1:
+            
+            mov dl , 0dh
+            int 21h
+            mov dl , 0ah
+            int 21h
+            
+            mov dl , 0c0h
+            int 21h
+            mov cx , 49d 
+	line2:  mov dl , 0c4h
+	        int 21h
+	        loop line2
+	        mov dl , 0d9h
+            int 21h
+        	
+mov ah ,0	
+int 16h	
+ret
+
+
+
+
