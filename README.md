@@ -1,7 +1,7 @@
 # Assembly Course
 
 
-**Assembly**
+**Assembly | ASM | Assembly Language**
 
 This is a simple Calculator for **Assembly and Language** course (by Dr.Soheili). It's written with ASM-8086 and compiled with [Emu8086][1].
 
