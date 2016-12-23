@@ -1,4 +1,4 @@
-# Assembly Course
+# Assembly Calculator
 
 
 **Assembly | ASM | Assembly Language**
